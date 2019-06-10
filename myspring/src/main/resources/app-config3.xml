@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        					http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.volvo.spring.myspring"/>
+	
+	<bean id="postgresqlDS"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="org.postgresql.Driver" />
+		<property name="url"
+			value="jdbc:postgresql://127.0.0.1:5432/mydb" />
+		<property name="username" value="postgres" />
+		<property name="password" value="admin" />
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="postgresqlDS" />
+		<property name="packagesToScan">
+			<list>
+				<value>com.volvo.spring.myspring.model</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<map>
+				<entry key="hibernate.dialect"
+					value="org.hibernate.dialect.PostgreSQLDialect" />
+				<entry key="hibernate.show_sql" value="true" />
+				<entry key="hibernate.hbm2ddl.auto" value="update" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="hibernateTemplate"
+		class="org.springframework.orm.hibernate4.HibernateTemplate"
+		autowire="constructor">
+		<property name="checkWriteOperations" value="false" />
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+		autowire="constructor">
+		</bean>
+
+	<!-- <bean id="jdbcTemp" class="org.springframework.jdbc.core.JdbcTemplate" 
+		autowire="constructor" /> -->
+
+	<!-- <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate" 
+		autowire="constructor"/> -->
+
+	<!-- <bean id="customerdao" class="com.volvo.spring.myspring.helper.JdbcCustomerDAO"/> -->
+
+	<!-- <bean id="customerdao" class="com.volvo.spring.myspring.helper.JdbcCustomerDAOWithNamedParameter"/> -->
+
+	<!-- <bean id="customerdao" class="com.volvo.spring.myspring.helper.JdbcCustomerDAOWithPreparedStatement" 
+		autowire="byType" /> -->
+
+	<bean id="customerdao"
+		class="com.volvo.spring.myspring.helper.HibernateCustomerDAO" />
+
+</beans>

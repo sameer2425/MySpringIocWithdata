@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        					http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<bean id="add" class="com.volvo.spring.myspring.bean.Address">
+		<constructor-arg value="Blore" />
+		<constructor-arg value="BTM" />
+		<constructor-arg value="KA" />
+	</bean>
+	<bean id="acc1" class="com.volvo.spring.myspring.bean.Account">
+		<property name="accno" value="11" />
+		<property name="atype" value="SA" />
+		<property name="bal" value="10000.0" />
+	</bean>
+	<bean id="acc2" class="com.volvo.spring.myspring.bean.Account">
+		<property name="accno" value="12" />
+		<property name="atype" value="SA" />
+		<property name="bal" value="20000.0" />
+	</bean>
+	<bean id="acc3" class="com.volvo.spring.myspring.bean.Account">
+		<property name="accno" value="13" />
+		<property name="atype" value="CA" />
+		<property name="bal" value="30000.0" />
+	</bean>
+	<bean id="cust" class="com.volvo.spring.myspring.bean.Customer">
+		<constructor-arg value="101" />
+		<constructor-arg value="sameer" />
+		<constructor-arg value="sameer@gmail.com" />
+		<constructor-arg value="9999" />
+		<property name="emails">
+			<list>
+				<value>aa@gmail.com</value>
+				<value>bb@gmail.com</value>
+				<value>cc@gmail.com</value>
+			</list>
+		</property>
+		<property name="phones">
+			<set>
+				<value>111</value>
+				<value>222</value>
+				<value>333</value>
+			</set>
+		</property>
+		<property name="refs">
+			<map>
+				<entry key="AA" value="11" />
+				<entry key="BB" value="22" />
+				<entry key="CC" value="33" />
+			</map>
+		</property>
+		<property name="myprops">
+			<props>
+				<prop key="AA">11</prop>
+				<prop key="BB">22</prop>
+				<prop key="CC">33</prop>
+			</props>
+		</property>
+		<property name="address" ref="add" />
+		<property name="accounts">
+			<list>
+				<ref bean="acc1" />
+				<ref bean="acc2" />
+				<ref bean="acc3" />
+			</list>
+		</property>
+	</bean>
+</beans>

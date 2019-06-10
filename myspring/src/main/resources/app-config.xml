@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        					http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<context:annotation-config />
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>oracle.properties</value>
+				<value>mysql.properties</value>
+				<value>common.properties</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="baseDS"
+		class="com.volvo.spring.myspring.bean.DataSource" abstract="true">
+		<property name="password" value="${us.pw}" />
+		<property name="min" value="${us.min}" />
+		<property name="max" value="${us.max}" />
+		<property name="timeout" value="${us.timeout}" />
+	</bean>
+
+	<bean id="oracleDS" parent="baseDS">
+		<property name="driverClass" value="${oracle.dc}" />
+		<property name="url" value="${oracle.url}" />
+		<property name="username" value="${oracle.un}" />
+	</bean>
+
+	<bean id="mysqlDS" parent="baseDS">
+		<property name="driverClass" value="${mysql.dc}" />
+		<property name="url" value="${mysql.url}" />
+		<property name="username" value="${mysql.un}" />
+	</bean>
+
+	<bean id="test" class="com.volvo.spring.myspring.bean.TestBean" />
+
+</beans>
